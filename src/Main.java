@@ -30,6 +30,8 @@ public class Main {
                 System.out.println("Usuário inserido com sucesso!");
             }
 
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
