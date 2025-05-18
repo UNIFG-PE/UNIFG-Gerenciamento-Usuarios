@@ -43,14 +43,7 @@ String user = "<user>";
 String password = "<your-password>";
 ```
 
-Replace <host>, <port>, <your-database>, <user>, and <your-password> with your MySQL server details.
-
-
-```env
-MONGO_URI=mongodb://your-host.com:12345/mydatabase
-```
-
-⚠️ Make sure your MongoDB server is running and accessible through the given URI.
+Replace *"host"*, *"port"*,*"your-database"*, *"user"*, and *"your-password"* with your MySQL server details.
 
 ## ✨ Features
 
