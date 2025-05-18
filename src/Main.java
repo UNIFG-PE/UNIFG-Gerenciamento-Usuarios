@@ -27,8 +27,10 @@ public class Main {
                 insertStmt.setString(3, email);
                 insertStmt.setString(4, cpf);
                 insertStmt.executeUpdate();
-                System.out.println("Usuário inserido com sucesso!");
+                System.out.println("Sucess for user creation!");
             }
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
