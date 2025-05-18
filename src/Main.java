@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://127.0.0.1:3306/users";
-        String user = "root";
-        String password = "1234";
+        String url = "jdbc:mysql://<host>:<port>/<your-database>";
+        String user = "<user>";
+        String password = "<your-password>";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
@@ -20,12 +20,13 @@ public class Main {
             String cpf = scanner.nextLine();
 
 
-            String insertSQL = "INSERT INTO users (username, password, email, cpf) VALUES (?, ?, ?, ?)";
+            String insertSQL = "INSERT INTO users (username, password, email, cpf, status) VALUES (?, ?, ?, ?)";
             try (PreparedStatement insertStmt = connection.prepareStatement(insertSQL)) {
                 insertStmt.setString(1, username);
                 insertStmt.setString(2, pass);
                 insertStmt.setString(3, email);
                 insertStmt.setString(4, cpf);
+                insertStmt.setString(5, "ACTIVE");
                 insertStmt.executeUpdate();
                 System.out.println("Sucess for user creation!");
             }
