@@ -16,7 +16,7 @@ public class Main {
             String pass = scanner.nextLine();
             System.out.print("Enter your email: ");
             String email = scanner.nextLine();
-            System.out.print("Enter you cpf: ");
+            System.out.print("Enter your cpf: ");
             String cpf = scanner.nextLine();
 
 
@@ -27,10 +27,28 @@ public class Main {
                 insertStmt.setString(3, email);
                 insertStmt.setString(4, cpf);
                 insertStmt.executeUpdate();
-                System.out.println("Sucess for user creation!");
+                System.out.println("User created successfully!");
             }
 
             //Vinicius Rocha
+            boolean Check = false;
+            do {
+                System.out.print("Enter your cpf to delete: ");
+                String deleteData = scanner.nextLine();
+
+                String deleteSQL = "DELETE FROM users WHERE cpf = ?";
+                try (PreparedStatement deleteStmt = connection.prepareStatement(deleteSQL)) {
+                    deleteStmt.setString(1, deleteData);
+                    int rowsAffected = deleteStmt.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        System.out.println("User deleted successfully.");
+                        Check = true;
+                    } else {
+                        System.out.println("No user found with the provided CPF, please try again");
+                    }
+                }
+            } while (!Check);
 
         } catch (SQLException e) {
             e.printStackTrace();
