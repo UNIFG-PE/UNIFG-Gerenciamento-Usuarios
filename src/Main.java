@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://127.0.0.1:3306/users";
+        String url = "jdbc:mysql://127.0.0.1:3306/USERS";
         String user = "root";
-        String password = "1234";
+        String password = "Jogador123$";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
@@ -30,7 +30,7 @@ public class Main {
                 System.out.println("Sucess for user creation!");
             }
 
-
+            //Vinicius Rocha
 
         } catch (SQLException e) {
             e.printStackTrace();
