@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://127.0.0.1:3306/users";
+        String url = "jdbc:mysql://127.0.0.1:3306/USERS";
         String user = "root";
         String password = "1234";
 
@@ -30,7 +30,7 @@ public class Main {
                 System.out.println("Sucess for user creation!");
             }
 
-
+            //Nícolas
 
         } catch (SQLException e) {
             e.printStackTrace();
