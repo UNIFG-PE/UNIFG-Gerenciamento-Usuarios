@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://127.0.0.1:3306/USERS";
         String user = "root";
-        String password = "Jogador123$";
+        String password = "P@toalado98";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
@@ -28,6 +28,44 @@ public class Main {
                 insertStmt.setString(4, cpf);
                 insertStmt.executeUpdate();
                 System.out.println("User created successfully!");
+            }
+
+            // luiz felipe
+
+            // Atualização de dados
+            System.out.print("Do you want to update your data? (yes/no): ");
+            String updateChoice = scanner.nextLine().trim().toLowerCase();
+
+            if (updateChoice.equals("yes")) {
+                System.out.println("Enter new data to update:");
+
+                System.out.print("New username: ");
+                String newUsername = scanner.nextLine();
+
+                System.out.print("New password: ");
+                String newPass = scanner.nextLine();
+
+                System.out.print("New email: ");
+                String newEmail = scanner.nextLine();
+
+                System.out.print("New CPF: ");
+                String newCpf = scanner.nextLine();
+
+                String updateSQL = "UPDATE users SET username = ?, password = ?, email = ?, cpf = ? WHERE id = ?";
+                try (PreparedStatement updateStmt = connection.prepareStatement(updateSQL)) {
+                    updateStmt.setString(1, newUsername);
+                    updateStmt.setString(2, newPass);
+                    updateStmt.setString(3, newEmail);
+                    updateStmt.setString(4, newCpf);
+
+
+                    int rowsUpdated = updateStmt.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("User updated successfully!");
+                    } else {
+                        System.out.println("Failed to update user.");
+                    }
+                }
             }
 
             //Vinicius Rocha
