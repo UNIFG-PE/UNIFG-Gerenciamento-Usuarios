@@ -30,10 +30,30 @@ public class Main {
                 System.out.println("Sucess for user creation!");
             }
 
-            //Nícolas
+            System.out.println("Insert ID User: ");
+            int idSearch = scanner.nextInt();
+            scanner.nextLine();
+
+            String selectByID = "SELECT * FROM users WHERE id = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(selectByID)) {
+                stmt.setInt(1, idSearch);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        System.out.println("\nFound User: ");
+                        System.out.println("ID: " + rs.getInt("id"));
+                        System.out.println("Name: " + rs.getInt("username"));
+                        System.out.println("Email: " + rs.getInt("email"));
+                        System.out.println("CPF: " + rs.getInt("cpf"));
+                    }
+                    else {
+                        System.out.println("User not Found with ID "+ idSearch + " not found.");
+                    }
+                }
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }
