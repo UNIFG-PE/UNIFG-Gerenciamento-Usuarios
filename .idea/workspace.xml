@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2508b9d7-da51-47c6-9854-579464b65990" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <list default="true" id="2508b9d7-da51-47c6-9854-579464b65990" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <list default="true" id="da14e09e-783d-4985-84cd-3f9fd8ab8b2a" name="Changes" comment="" />
@@ -16,16 +19,39 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Natanael-Heinrick&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/UNIFG-PE/UNIFG-Gerenciamento-Usuarios.git&quot;,
+    &quot;accountId&quot;: &quot;49525e6a-ce9e-47a3-92ce-e4dd99fbd068&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2xMl71lwM0A3pqWukXcSnvs83Ig" />
+  <component name="ProjectId" id="2x1MCWhCEuDK8kGLDfKmJuPRV4Y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/read&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Natanael/Desktop/UNIFG-Gerenciamento-Usuarios&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
@@ -52,6 +78,11 @@
     "project.structure.side.proportion": "0.2"
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Natanael\IdeaProjects\CRUD-Gerenciamento-Usuarios\lib" />
+    </key>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -68,17 +99,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="da14e09e-783d-4985-84cd-3f9fd8ab8b2a" name="Changes" comment="" />
-      <created>1747755660210</created>
+      <changelist id="2508b9d7-da51-47c6-9854-579464b65990" name="Changes" comment="" />
+      <created>1747101001319</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1747755660210</updated>
-      <workItem from="1747755665168" duration="1132000" />
-      <workItem from="1747764015099" duration="1118000" />
+      <updated>1747101001319</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>

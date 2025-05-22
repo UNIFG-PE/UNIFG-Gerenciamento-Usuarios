@@ -16,7 +16,7 @@ public class Main {
             String pass = scanner.nextLine();
             System.out.print("Enter your email: ");
             String email = scanner.nextLine();
-            System.out.print("Enter your cpf: ");
+            System.out.print("Enter you cpf: ");
             String cpf = scanner.nextLine();
 
 
@@ -28,9 +28,29 @@ public class Main {
                 insertStmt.setString(4, cpf);
                 insertStmt.setString(5, "ACTIVE");
                 insertStmt.executeUpdate();
-                System.out.println("User created successfully!");
+                System.out.println("Sucess for user creation!");
             }
 
+            System.out.println("Insert ID User: ");
+            int idSearch = scanner.nextInt();
+            scanner.nextLine();
+
+            String selectByID = "SELECT * FROM users WHERE id = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(selectByID)) {
+                stmt.setInt(1, idSearch);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        System.out.println("\nFound User: ");
+                        System.out.println("ID: " + rs.getInt("id"));
+                        System.out.println("Name: " + rs.getInt("username"));
+                        System.out.println("Email: " + rs.getInt("email"));
+                        System.out.println("CPF: " + rs.getInt("cpf"));
+                    }
+                    else {
+                        System.out.println("User not Found with ID "+ idSearch + " not found.");
+                    }
+                }
+            }
             // luiz felipe
 
             // Atualização de dados
