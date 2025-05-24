@@ -55,7 +55,7 @@ Replace *"host"*, *"port"*,*"your-database"*, *"user"*, and *"your-password"* wi
 
 ## 📌 Link for Features:
 
-<a name="return-to-links-page-book"></a>
+<a name="return-to-links-for-features"></a>
 - [Register user](#register-user)
 - [Edit user](#edit-user)
 - [Show user by ID](#show-user-by-id)
