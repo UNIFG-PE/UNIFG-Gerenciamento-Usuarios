@@ -208,6 +208,25 @@ public class Main {
                     }
                 }
 
+            String selectAll = "SELECT * FROM users";
+            try (Statement stmt = connection.createStatement();
+                 ResultSet rs = stmt.executeQuery(selectAll)) {
+
+                System.out.println("\n=== Lista de Todos os Usuários ===");
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("username");
+                    String emailResult = rs.getString("email");
+                    String cpfResult = rs.getString("cpf");
+
+                    System.out.println("ID: " + id);
+                    System.out.println("Nome: " + name);
+                    System.out.println("Email: " + emailResult);
+                    System.out.println("CPF: " + cpfResult);
+                    System.out.println("-----------------------------");
+                }
+            }
+
 
             }  catch (SQLException e) {
                 e.printStackTrace();
