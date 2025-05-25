@@ -226,7 +226,22 @@ public class Main {
                     System.out.println("-----------------------------");
                 }
             }
-            }  catch (SQLException e) {
+
+            String sql = "DELETE FROM usuarios";
+
+            try (Connection conn = ConnectionFactory.getConnection();
+
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.executeUpdate();
+
+            } catch (SQLException e) {
+
+                throw new RuntimeException("Error deleting all users", e);
+
+            }
+
+        }  catch (SQLException e) {
                 e.printStackTrace();
         }
     }
