@@ -115,7 +115,7 @@ New date of birth(dd/MM/yyyy): "02/03/4567"
 ````bash
 User updated successfully!
 ````
-*If not:
+* If not:
 ```bash
 Failed to update user.
 ```
@@ -169,7 +169,7 @@ User Type: Administrator
 ID: 2
 Name: João
 Email: joao@gmail.com
-User Type: Regular
+User Type: User
 ````
 
 * If the user is not an Administrator:
@@ -183,6 +183,24 @@ Access denied. Only Administrators can view all users.
 ```bash
 No user found with email: example@email.com
 ```
+
+#### 👥 Step 3: List All Users 
+
+If the user is an Administrator, the system now uses a new structure to list all users from the database:
+
+```bash
+=== Lista de Todos os Usuários ===
+ID: 1
+Nome: Maurício
+Email: mclovin@gmail.com
+-----------------------------
+ID: 2
+Nome: João
+Email: joao@gmail.com
+-----------------------------
+```
+
+* 📌 This code was added to enhance administrator-level user listing with extra fields like CPF.
 
 ### ⚠️ Error Handling
 
@@ -243,6 +261,29 @@ User deleted successfully.
 
 ```bash
 No user found with the provided email, please try again.
+```
+
+#### 🔥 Step 3: Delete All Users (Admin Only)
+
+This operation will delete all users from the system. It's intended for administrators who want to reset the database after performing a full backup.
+
+##### ⚠️ Usage Warning
+* Only administrators can perform this operation.
+* Make sure to perform a backup before running this action — it will permanently delete all user data.
+
+✅ Successful Output
+```bash
+All users deleted successfully.
+```
+
+❌ Access Denied (Non-Admin)
+```bash
+Access denied. Only administrators can delete all users.
+```
+
+⚠️ Error Handling
+```bash
+Error deleting all users: <error message>
 ```
 
 ### ⚠️ Error Handling
