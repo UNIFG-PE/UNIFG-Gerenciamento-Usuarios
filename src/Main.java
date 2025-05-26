@@ -20,7 +20,7 @@ public class Main {
                 System.out.println("4 - Delete user");
                 System.out.println("0 - Exit");
                 System.out.println("=================");
-                System.out.print("Choice one option: ");
+                System.out.print("Choose an option: ");
 
 
                 int option = scanner.nextInt();
@@ -34,9 +34,9 @@ public class Main {
                         String address = scanner.nextLine();
                         System.out.print("Enter your telephone: ");
                         String telephone = scanner.nextLine();
-                        System.out.print("Enter you e-mail: ");
+                        System.out.print("Enter your e-mail: ");
                         String email = scanner.nextLine();
-                        System.out.print("Enter you date of birth(dd-MM-yyyy): ");
+                        System.out.print("Enter your birth date (YYYY-MM-DD): ");
                         String dateOfBirth = scanner.nextLine();
 
 
@@ -49,7 +49,7 @@ public class Main {
                             insertStmt.setString(5, dateOfBirth);
                             insertStmt.setString(6, "User");
                             insertStmt.executeUpdate();
-                            System.out.println("Sucess for user creation!");
+                            System.out.println("Success for user creation!");
                         } catch (SQLException e) {
                             System.out.println("Error to register user: " + e.getMessage());
                         }
@@ -77,7 +77,7 @@ public class Main {
                             System.out.print("New e-mail: ");
                             String newEmail = scanner.nextLine();
 
-                            System.out.print("New date of birth(dd/MM/yyyy): ");
+                            System.out.print("New birth date (YYYY-MM-DD): ");
                             String newDateOfBirth = scanner.nextLine();
                             System.out.println("=================");
 
@@ -103,7 +103,7 @@ public class Main {
 
                     case 3:
 
-                        System.out.println("Enter your email: ");
+                        System.out.println("Enter your e-mail: ");
                         String emailSearch = scanner.nextLine();
 
                         String selectByEmail = "SELECT * FROM libraryusers WHERE email = ?";
@@ -117,8 +117,8 @@ public class Main {
                                     System.out.println("Name: " + rs.getString("name"));
                                     System.out.println("Address: " + rs.getString("address"));
                                     System.out.println("Telephone: " + rs.getString("telephone"));
-                                    System.out.println("Email: " + rs.getString("email"));
-                                    System.out.println("Date of Birth: " + rs.getString("dateOfBirth"));
+                                    System.out.println("E-mail: " + rs.getString("email"));
+                                    System.out.println("Birth date: " + rs.getString("dateOfBirth"));
                                     System.out.println("=================");
 
                                     if (rs.getString("userType").equalsIgnoreCase("Administrator")) {
@@ -132,7 +132,7 @@ public class Main {
                                                 System.out.println("-------------------------------");
                                                 System.out.println("ID: " + allUsers.getInt("id"));
                                                 System.out.println("Name: " + allUsers.getString("name"));
-                                                System.out.println("Email: " + allUsers.getString("email"));
+                                                System.out.println("E-mail: " + allUsers.getString("email"));
                                                 System.out.println("User Type: " + allUsers.getString("userType"));
                                             }
                                         }
@@ -140,11 +140,11 @@ public class Main {
                                             System.out.println("Access denied. Only Administrators can view all users.");
                                     }
                                 } else {
-                                    System.out.println("No user found with email: " + emailSearch);
+                                    System.out.println("No user found with provided e-mail: " + emailSearch);
                                 }
                             }
                         } catch (SQLException e) {
-                            System.out.println("Erro ao atualizar usuário: " + e.getMessage());
+                            System.out.println("Error when updating user: " + e.getMessage());
                         }
                         break;
 
@@ -153,7 +153,7 @@ public class Main {
 
                         boolean Check = false;
                         do {
-                            System.out.print("Enter your email (to check if you're an administrator): ");
+                            System.out.print("Enter your administrator e-mail: ");
                             String adminEmail = scanner.nextLine();
 
                             String verifyAdminSQL = "SELECT * FROM libraryusers WHERE email = ?";
@@ -167,26 +167,26 @@ public class Main {
                                             break;
                                         }
 
-                                        System.out.print("Enter the email of the user you want to delete: ");
+                                        System.out.print("Enter the e-mail of the user you want to delete: ");
                                         String deleteEmail = scanner.nextLine();
 
 
                                         String deleteData = "DELETE FROM libraryusers  WHERE email  = ?";
                                         try (PreparedStatement deleteStmt = connection.prepareStatement(deleteData)) {
-                                            deleteStmt.setString(1, deleteData);
+                                            deleteStmt.setString(1, deleteEmail);
                                             int rowsAffected = deleteStmt.executeUpdate();
 
                                             if (rowsAffected > 0) {
                                                 System.out.println("User deleted successfully.");
                                                 Check = true;
                                             } else {
-                                                System.out.println("No user found with the provided CPF, please try again");
+                                                System.out.println("No user found with the provided CPF, please try again.");
                                             }
                                         } catch (SQLException e) {
                                             System.out.println("Error during deletion: " + e.getMessage());
                                         }
                                     } else {
-                                        System.out.println("Administrator not found with the given email.");
+                                        System.out.println("Administrator not found with the given e-mail.");
                                         break;
                                     }
                                 }
@@ -200,11 +200,11 @@ public class Main {
 
                     case 0:
                         running = false;
-                        System.out.println("Saindo...");
+                        System.out.println("Shutting down...");
                         break;
 
                     default:
-                        System.out.println("Opção inválida! Tente novamente.");
+                        System.out.println("Invalid option, please try again.");
                     }
                 }
             }  catch (SQLException e) {
