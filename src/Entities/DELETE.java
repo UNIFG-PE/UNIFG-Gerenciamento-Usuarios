@@ -1,5 +1,6 @@
 package Entities;
 
+import Services.AdminAUTH;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -7,10 +8,12 @@ public class DELETE {
 
     private final Connection connection;
     private final Scanner scanner;
+    private final AdminAUTH adminAUTH;
 
     public DELETE(Connection connection, Scanner scanner) {
         this.connection = connection;
         this.scanner = scanner;
+        this.adminAUTH = new AdminAUTH(connection);
     }
 
     public void deleteUser() {
@@ -20,7 +23,7 @@ public class DELETE {
             System.out.print("Enter your administrator e-mail: ");
             String adminEmail = scanner.nextLine();
 
-            if (!isAdmin(adminEmail)) {
+            if (!adminAUTH.isAdmin(adminEmail)) {
                 System.out.println("Access denied. Only administrators can delete users.");
                 break;
             }
@@ -47,28 +50,4 @@ public class DELETE {
         } while (!check);
     }
 
-    private boolean isAdmin(String email) {
-        String verifyAdminSQL =
-                "SELECT ut.type_name " +
-                        "FROM users u " +
-                        "JOIN user_type ut ON u.user_type_id = ut.id " +
-                        "WHERE u.email = ?";
-
-        try (PreparedStatement adminStmt = connection.prepareStatement(verifyAdminSQL)) {
-            adminStmt.setString(1, email);
-
-            try (ResultSet rs = adminStmt.executeQuery()) {
-                if (rs.next()) {
-                    String userType = rs.getString("type_name");
-                    return userType.equalsIgnoreCase("Administrator");
-                } else {
-                    System.out.println("Administrator not found with the provided e-mail.");
-                    return false;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Verification failed: " + e.getMessage());
-            return false;
-        }
-    }
 }
