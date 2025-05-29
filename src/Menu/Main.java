@@ -169,7 +169,41 @@ public class Main {
                         System.out.println("Invalid option, please try again.");
                     }
                 }
-            }  catch (SQLException e) {
+
+            String selectAll = "SELECT * FROM users";
+            try (Statement stmt = connection.createStatement();
+                 ResultSet rs = stmt.executeQuery(selectAll)) {
+
+                System.out.println("\n=== Lista de Todos os Usuários ===");
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("username");
+                    String emailResult = rs.getString("email");
+                    String cpfResult = rs.getString("cpf");
+
+                    System.out.println("ID: " + id);
+                    System.out.println("Nome: " + name);
+                    System.out.println("Email: " + emailResult);
+                    System.out.println("CPF: " + cpfResult);
+                    System.out.println("-----------------------------");
+                }
+            }
+
+            String sql = "DELETE FROM usuarios";
+
+            try (Connection conn = ConnectionFactory.getConnection();
+
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.executeUpdate();
+
+            } catch (SQLException e) {
+
+                throw new RuntimeException("Error deleting all users", e);
+
+            }
+
+        }  catch (SQLException e) {
                 e.printStackTrace();
         }
     }
