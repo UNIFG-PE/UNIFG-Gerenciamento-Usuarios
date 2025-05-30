@@ -1,6 +1,7 @@
 package Menu;
 
 import Entities.DELETE;
+import Services.AdminAUTH;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/library";
         String user = "root";
-        String password = "Jogador123$";
+        String password = "Jg889889_";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
@@ -107,51 +108,104 @@ public class Main {
 
                     case 3:
 
-                        System.out.println("Enter your e-mail: ");
-                        String emailSearch = scanner.nextLine();
+                        System.out.print("Enter your administrator e-mail: ");
+                        String adminEmail = scanner.nextLine();
 
-                        String selectByEmail = "SELECT * FROM libraryusers WHERE email = ?";
-                        try (PreparedStatement stmt = connection.prepareStatement(selectByEmail)) {
-                            stmt.setString(1, emailSearch);
-                            try (ResultSet rs = stmt.executeQuery()) {
-                                if (rs.next()) {
-                                    System.out.println("=================");
-                                    System.out.println("Found User: ");
-                                    System.out.println("ID: " + rs.getInt("id"));
-                                    System.out.println("Name: " + rs.getString("name"));
-                                    System.out.println("Address: " + rs.getString("address"));
-                                    System.out.println("Telephone: " + rs.getString("telephone"));
-                                    System.out.println("E-mail: " + rs.getString("email"));
-                                    System.out.println("Birth date: " + rs.getString("dateOfBirth"));
-                                    System.out.println("=================");
+                        AdminAUTH adminAUTH = new AdminAUTH(connection);
 
-                                    if (rs.getString("userType").equalsIgnoreCase("Administrator")) {
-                                        System.out.println("Administrator verified. Listing all registered users:");
 
-                                        String listAllUsersSQL = "SELECT * FROM libraryusers";
-                                        try (PreparedStatement listStmt = connection.prepareStatement(listAllUsersSQL);
-                                             ResultSet allUsers = listStmt.executeQuery()) {
-
-                                            while (allUsers.next()) {
-                                                System.out.println("-------------------------------");
-                                                System.out.println("ID: " + allUsers.getInt("id"));
-                                                System.out.println("Name: " + allUsers.getString("name"));
-                                                System.out.println("E-mail: " + allUsers.getString("email"));
-                                                System.out.println("User Type: " + allUsers.getString("userType"));
-                                            }
-                                        }
-                                    } else {
-                                            System.out.println("Access denied. Only Administrators can view all users.");
-                                    }
-                                } else {
-                                    System.out.println("No user found with provided e-mail: " + emailSearch);
-                                }
-                            }
-                        } catch (SQLException e) {
-                            System.out.println("Error when updating user: " + e.getMessage());
+                        if (!adminAUTH.isAdmin(adminEmail)) {
+                            System.out.println("Access denied. Only administrators can delete users.");
+                            break;
                         }
-                        break;
 
+                        System.out.println("1-Show all data");
+                        System.out.println("2-Show specific data");
+
+                        int readOption = scanner.nextInt();
+
+                        switch (readOption) {
+
+                            case 1:
+
+                            System.out.println("Listing all registered users:");
+
+                            String listAllUsersSQL = "SELECT u.*, ut.type_name FROM users u JOIN user_type ut ON u.user_type_id = ut.id";
+                            try (PreparedStatement listStmt = connection.prepareStatement(listAllUsersSQL);
+                                 ResultSet allUsers = listStmt.executeQuery()) {
+
+                                while (allUsers.next()) {
+                                    System.out.println("-------------------------------");
+                                    System.out.println("ID: " + allUsers.getInt("id"));
+                                    System.out.println("Name: " + allUsers.getString("username"));
+                                    System.out.println("Address: " + allUsers.getString("address"));
+                                    System.out.println("Telephone: " + allUsers.getString("telephone"));
+                                    System.out.println("E-mail: " + allUsers.getString("email"));
+                                    System.out.println("Birth date: " + allUsers.getDate("dateOfBirth"));
+                                    System.out.println("User Type: " + allUsers.getString("type_name"));
+                                }
+
+                            } catch (SQLException e) {
+                                System.out.println("Error retrieving all users: " + e.getMessage());
+                            }
+                            break;
+
+                            case 2:
+
+                            /*Nicolas must fix this
+                            System.out.println("Enter your e-mail: ");
+                                String emailSearch = scanner.nextLine();
+
+                                String selectByEmail = "SELECT * FROM libraryusers WHERE email = ?";
+                                try (PreparedStatement stmt = connection.prepareStatement(selectByEmail)) {
+                                    stmt.setString(1, emailSearch);
+                                    try (ResultSet rs = stmt.executeQuery()) {
+                                        if (rs.next()) {
+                                            System.out.println("=================");
+                                            System.out.println("Found User: ");
+                                            System.out.println("ID: " + rs.getInt("id"));
+                                            System.out.println("Name: " + rs.getString("name"));
+                                            System.out.println("Address: " + rs.getString("address"));
+                                            System.out.println("Telephone: " + rs.getString("telephone"));
+                                            System.out.println("E-mail: " + rs.getString("email"));
+                                            System.out.println("Birth date: " + rs.getString("dateOfBirth"));
+                                            System.out.println("=================");
+
+                                            if (rs.getString("userType").equalsIgnoreCase("Administrator")) {
+                                                System.out.println("Administrator verified. Listing all registered users:");
+
+                                                String listAllUsersSQL = "SELECT * FROM libraryusers";
+                                                try (PreparedStatement listStmt = connection.prepareStatement(listAllUsersSQL);
+                                                     ResultSet allUsers = listStmt.executeQuery()) {
+
+                                                    while (allUsers.next()) {
+                                                        System.out.println("-------------------------------");
+                                                        System.out.println("ID: " + allUsers.getInt("id"));
+                                                        System.out.println("Name: " + allUsers.getString("name"));
+                                                        System.out.println("E-mail: " + allUsers.getString("email"));
+                                                        System.out.println("User Type: " + allUsers.getString("userType"));
+                                                    }
+                                                }
+                                            } else {
+                                                    System.out.println("Access denied. Only Administrators can view all users.");
+                                            }
+                                        } else {
+                                            System.out.println("No user found with provided e-mail: " + emailSearch);
+                                        }
+                                    }
+                                } catch (SQLException e) {
+                                    System.out.println("Error when updating user: " + e.getMessage());
+                                }*/
+                            System.out.println("Option currently unavailable for bug fixing!");
+                            break;
+
+                            default:
+                                System.out.println("Not available option, please try again.");
+
+                                break;
+                        }
+
+                        break;
 
                     case 4:
 
@@ -170,38 +224,9 @@ public class Main {
                     }
                 }
 
-            String selectAll = "SELECT * FROM users";
-            try (Statement stmt = connection.createStatement();
-                 ResultSet rs = stmt.executeQuery(selectAll)) {
 
-                System.out.println("\n=== Lista de Todos os Usuários ===");
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String name = rs.getString("username");
-                    String emailResult = rs.getString("email");
-                    String cpfResult = rs.getString("cpf");
 
-                    System.out.println("ID: " + id);
-                    System.out.println("Nome: " + name);
-                    System.out.println("Email: " + emailResult);
-                    System.out.println("CPF: " + cpfResult);
-                    System.out.println("-----------------------------");
-                }
-            }
 
-            String sql = "DELETE FROM usuarios";
-
-            try (Connection conn = ConnectionFactory.getConnection();
-
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.executeUpdate();
-
-            } catch (SQLException e) {
-
-                throw new RuntimeException("Error deleting all users", e);
-
-            }
 
         }  catch (SQLException e) {
                 e.printStackTrace();
