@@ -1,16 +1,15 @@
-package Entities;
+package Gerenciamento_Usuario.Services;
 
-import Services.AdminAUTH;
 import java.sql.*;
 import java.util.Scanner;
 
-public class DELETE {
+public class GerenciarDAO {
 
     private final Connection connection;
     private final Scanner scanner;
     private final AdminAUTH adminAUTH;
 
-    public DELETE(Connection connection, Scanner scanner) {
+    public GerenciarDAO(Connection connection, Scanner scanner) {
         this.connection = connection;
         this.scanner = scanner;
         this.adminAUTH = new AdminAUTH(connection);
