@@ -10,10 +10,11 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/library";
         String user = "root";
-        String password = "Jogador123$";
+        String password = "YourPassword";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
+            GerenciarDAO DAO = new GerenciarDAO(connection, scanner);
 
             boolean running = true;
 
@@ -59,12 +60,8 @@ public class Main {
                         }
                         break;
 
-
                     case "2":
-
-                        GerenciarDAO dao = new GerenciarDAO(connection, scanner);
-                        dao.updateUser();
-
+                        DAO.updateUser();
                         break;
 
                     case "3":
@@ -89,49 +86,7 @@ public class Main {
                         switch (readOption) {
 
                             case "1":
-
-                                System.out.println("Listing all registered users:");
-
-                                String listAllUsersSQL = "SELECT u.*, ut.type_name FROM users u JOIN user_type ut ON u.user_type_id = ut.id";
-
-                                class User {
-                                    private int id;
-                                    private String username;
-                                    private String address;
-                                    private String telephone;
-                                    private String email;
-                                    private java.sql.Date dateOfBirth;
-                                    private String userType;
-
-                                    public User(int id, String username, String address, String telephone, String email, java.sql.Date dateOfBirth, String userType) {
-                                        this.id = id;
-                                        this.username = username;
-                                        this.address = address;
-                                        this.telephone = telephone;
-                                        this.email = email;
-                                        this.dateOfBirth = dateOfBirth;
-                                        this.userType = userType;
-                                    }
-
-                                    public int getId() { return id; }
-                                    public String getUsername() { return username; }
-                                    public String getAddress() { return address; }
-                                    public String getTelephone() { return telephone; }
-                                    public String getEmail() { return email; }
-                                    public java.sql.Date getDateOfBirth() { return dateOfBirth; }
-                                    public String getUserType() { return userType; }
-
-                                    public void displayInfo() {
-                                        System.out.println("-------------------------------");
-                                        System.out.println("ID: " + id);
-                                        System.out.println("Name: " + username);
-                                        System.out.println("Address: " + address);
-                                        System.out.println("Telephone: " + telephone);
-                                        System.out.println("E-mail: " + email);
-                                        System.out.println("Birth date: " + dateOfBirth);
-                                        System.out.println("User Type: " + userType);
-                                    }
-                                }
+                                DAO.listAllUsers();
                                 break;
 
                             case "2":
@@ -182,14 +137,12 @@ public class Main {
                         switch(optionDelete) {
 
                             case "1":
-                                GerenciarDAO Delete = new GerenciarDAO(connection, scanner);
-                                Delete.deleteUser();
-                            break;
+                                DAO.deleteUser();
+                                break;
 
                             case "2":
-                                GerenciarDAO DeleteAll = new GerenciarDAO(connection, scanner);
-                                DeleteAll.deleteAllUsers();
-
+                                DAO.deleteAllUsers();
+                                break;
                         }
 
 

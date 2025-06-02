@@ -15,6 +15,30 @@ public class GerenciarDAO {
         this.adminAUTH = new AdminAUTH(connection);
     }
 
+    public void listAllUsers() {
+        System.out.println("Listing all registered users:");
+
+        String listAllUsersSQL = "SELECT u.*, ut.type_name FROM users u JOIN user_type ut ON u.user_type_id = ut.id";
+
+        try (PreparedStatement listStmt = connection.prepareStatement(listAllUsersSQL);
+             ResultSet allUsers = listStmt.executeQuery()) {
+
+            while (allUsers.next()) {
+                System.out.println("-------------------------------");
+                System.out.println("ID: " + allUsers.getInt("id"));
+                System.out.println("Name: " + allUsers.getString("username"));
+                System.out.println("Address: " + allUsers.getString("address"));
+                System.out.println("Telephone: " + allUsers.getString("telephone"));
+                System.out.println("E-mail: " + allUsers.getString("email"));
+                System.out.println("Birth date: " + allUsers.getDate("dateOfBirth"));
+                System.out.println("User Type: " + allUsers.getString("type_name"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving all users: " + e.getMessage());
+        }
+    }
+
+
     public void updateUser() {
         System.out.print("Enter your current e-mail to update your data: ");
         String currentEmail = scanner.nextLine();
@@ -104,6 +128,8 @@ public class GerenciarDAO {
             }
         } while (!check);
     }
+
+
 
     public void deleteAllUsers() {
         System.out.print("Enter your administrator e-mail to confirm deletion of all users: ");
