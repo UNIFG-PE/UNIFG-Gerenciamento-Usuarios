@@ -15,6 +15,62 @@ public class GerenciarDAO {
         this.adminAUTH = new AdminAUTH(connection);
     }
 
+    public void updateUser() {
+        System.out.print("Enter your current e-mail to update your data: ");
+        String currentEmail = scanner.nextLine();
+
+        System.out.print("Are you sure you want to update your data? (yes/no): ");
+        String updateChoice = scanner.nextLine().trim().toLowerCase();
+
+        if (!updateChoice.equals("yes")) {
+            System.out.println("Update cancelled.");
+            return;
+        }
+
+        System.out.println("Enter new data to update:");
+        System.out.println("=================");
+
+        System.out.print("New name: ");
+        String newName = scanner.nextLine();
+
+        System.out.print("New address: ");
+        String newAddress = scanner.nextLine();
+
+        System.out.print("New telephone: ");
+        String newTelephone = scanner.nextLine();
+
+        System.out.print("New e-mail: ");
+        String newEmail = scanner.nextLine();
+
+        System.out.print("New birth date (YYYY-MM-DD): ");
+        String newDateOfBirth = scanner.nextLine();
+
+        System.out.println("=================");
+
+        String updateSQL = "UPDATE users SET username = ?, address = ?, telephone = ?, email = ?, dateOfBirth = ? WHERE email = ?";
+
+        try (PreparedStatement updateStmt = connection.prepareStatement(updateSQL)) {
+            updateStmt.setString(1, newName);
+            updateStmt.setString(2, newAddress);
+            updateStmt.setString(3, newTelephone);
+            updateStmt.setString(4, newEmail);
+            updateStmt.setString(5, newDateOfBirth);
+            updateStmt.setString(6, currentEmail);
+
+            int rowsUpdated = updateStmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("User updated successfully!");
+            } else {
+                System.out.println("Failed to update user. No user found with the provided e-mail.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating user: " + e.getMessage());
+        }
+    }
+
+
+
     public void deleteUser() {
         boolean check = false;
 
@@ -48,5 +104,34 @@ public class GerenciarDAO {
             }
         } while (!check);
     }
+
+    public void deleteAllUsers() {
+        System.out.print("Enter your administrator e-mail to confirm deletion of all users: ");
+        String adminEmail = scanner.nextLine();
+
+        if (!adminAUTH.isAdmin(adminEmail)) {
+            System.out.println("Access denied. Only administrators can delete all users.");
+            return;
+        }
+
+        System.out.print("Are you sure you want to delete ALL users? This action cannot be undone! (yes/no): ");
+        String confirmation = scanner.nextLine().trim().toLowerCase();
+
+        if (!confirmation.equals("yes")) {
+            System.out.println("Deletion cancelled.");
+            return;
+        }
+
+        String deleteAllSQL = "DELETE FROM users";
+
+        try (PreparedStatement deleteStmt = connection.prepareStatement(deleteAllSQL)) {
+            int rowsDeleted = deleteStmt.executeUpdate();
+
+            System.out.println(rowsDeleted + " users have been deleted.");
+        } catch (SQLException e) {
+            System.out.println("Error during deletion: " + e.getMessage());
+        }
+    }
+
 
 }

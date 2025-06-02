@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/library";
         String user = "root";
-        String password = "yourPassword";
+        String password = "Jogador123$";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
@@ -62,48 +62,10 @@ public class Main {
 
                     case "2":
 
-                        System.out.print("Do you want to update your data? (yes/no): ");
-                        String updateChoice = scanner.nextLine().trim().toLowerCase();
+                        GerenciarDAO dao = new GerenciarDAO(connection, scanner);
+                        dao.updateUser();
 
-                        if (updateChoice.equals("yes")) {
-                            System.out.println("Enter new data to update:");
-
-                            System.out.println("=================");
-                            System.out.print("New name: ");
-                            String newName = scanner.nextLine();
-
-                            System.out.print("New address: ");
-                            String newAddress = scanner.nextLine();
-
-                            System.out.print("New telephone: ");
-                            String newTelephone = scanner.nextLine();
-
-                            System.out.print("New e-mail: ");
-                            String newEmail = scanner.nextLine();
-
-                            System.out.print("New birth date (YYYY-MM-DD): ");
-                            String newDateOfBirth = scanner.nextLine();
-                            System.out.println("=================");
-
-                            String updateSQL = "UPDATE library  SET name = ?,  address = ? ,telephone = ?, email = ?, dateOfBirth = ? WHERE id = ?";
-                            try (PreparedStatement updateStmt = connection.prepareStatement(updateSQL)) {
-                                updateStmt.setString(1, newName);
-                                updateStmt.setString(2, newAddress);
-                                updateStmt.setString(3, newTelephone);
-                                updateStmt.setString(4, newEmail);
-                                updateStmt.setString(5, newDateOfBirth);
-
-
-                                int rowsUpdated = updateStmt.executeUpdate();
-                                if (rowsUpdated > 0) {
-                                    System.out.println("User updated successfully!");
-                                } else {
-                                    System.out.println("Failed to update user.");
-                                }
-                            } catch (SQLException e) {
-                                System.out.println("Error to update user: " + e.getMessage());
-                            }
-                        }
+                        break;
 
                     case "3":
 
@@ -186,9 +148,27 @@ public class Main {
 
                     case "4":
 
-                        GerenciarDAO Delete = new GerenciarDAO(connection, scanner);
-                        Delete.deleteUser();
-                        break;
+                        String optionDelete;
+
+                        System.out.println("=================");
+                        System.out.println("1 - Delete specific user");
+                        System.out.println("2 - Delete all data (WARNING, THIS WILL DELETE THE WHOLE DATA FROM THE DATABASE!)");
+                        System.out.println("=================");
+                        System.out.print("Choose an option: ");
+                        optionDelete = scanner.nextLine();
+
+                        switch(optionDelete) {
+
+                            case "1":
+                                GerenciarDAO Delete = new GerenciarDAO(connection, scanner);
+                                Delete.deleteUser();
+                            break;
+
+                            case "2":
+                                GerenciarDAO DeleteAll = new GerenciarDAO(connection, scanner);
+                                DeleteAll.deleteAllUsers();
+
+                        }
 
 
                     case "0":
