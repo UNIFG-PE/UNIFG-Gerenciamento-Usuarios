@@ -94,21 +94,43 @@ public class Main {
 
                                 String listAllUsersSQL = "SELECT u.*, ut.type_name FROM users u JOIN user_type ut ON u.user_type_id = ut.id";
 
-                                try (PreparedStatement listStmt = connection.prepareStatement(listAllUsersSQL);
-                                     ResultSet allUsers = listStmt.executeQuery()) {
+                                class User {
+                                    private int id;
+                                    private String username;
+                                    private String address;
+                                    private String telephone;
+                                    private String email;
+                                    private java.sql.Date dateOfBirth;
+                                    private String userType;
 
-                                    while (allUsers.next()) {
-                                        System.out.println("-------------------------------");
-                                        System.out.println("ID: " + allUsers.getInt("id"));
-                                        System.out.println("Name: " + allUsers.getString("username"));
-                                        System.out.println("Address: " + allUsers.getString("address"));
-                                        System.out.println("Telephone: " + allUsers.getString("telephone"));
-                                        System.out.println("E-mail: " + allUsers.getString("email"));
-                                        System.out.println("Birth date: " + allUsers.getDate("dateOfBirth"));
-                                        System.out.println("User Type: " + allUsers.getString("type_name"));
+                                    public User(int id, String username, String address, String telephone, String email, java.sql.Date dateOfBirth, String userType) {
+                                        this.id = id;
+                                        this.username = username;
+                                        this.address = address;
+                                        this.telephone = telephone;
+                                        this.email = email;
+                                        this.dateOfBirth = dateOfBirth;
+                                        this.userType = userType;
                                     }
-                                } catch (SQLException e) {
-                                    System.out.println("Error retrieving all users: " + e.getMessage());
+
+                                    public int getId() { return id; }
+                                    public String getUsername() { return username; }
+                                    public String getAddress() { return address; }
+                                    public String getTelephone() { return telephone; }
+                                    public String getEmail() { return email; }
+                                    public java.sql.Date getDateOfBirth() { return dateOfBirth; }
+                                    public String getUserType() { return userType; }
+
+                                    public void displayInfo() {
+                                        System.out.println("-------------------------------");
+                                        System.out.println("ID: " + id);
+                                        System.out.println("Name: " + username);
+                                        System.out.println("Address: " + address);
+                                        System.out.println("Telephone: " + telephone);
+                                        System.out.println("E-mail: " + email);
+                                        System.out.println("Birth date: " + dateOfBirth);
+                                        System.out.println("User Type: " + userType);
+                                    }
                                 }
                                 break;
 
