@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/library";
         String user = "root";
-        String password = "YourPassword";
+        String password = "1234";
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Scanner scanner = new Scanner(System.in)) {
@@ -90,29 +90,7 @@ public class Main {
                                 break;
 
                             case "2":
-
-                                System.out.print("Insert User ID: ");
-                                int idSearch = scanner.nextInt();
-                                scanner.nextLine();
-
-                                String selectByID = "SELECT * FROM users WHERE id = ?";
-                                try (PreparedStatement stmt = connection.prepareStatement(selectByID)) {
-                                    stmt.setInt(1, idSearch);
-                                    try (ResultSet rs = stmt.executeQuery()) {
-                                        if (rs.next()) {
-                                            System.out.println("Found User: ");
-                                            System.out.println("ID: " + rs.getInt("id"));
-                                            System.out.println("Name: " + rs.getString("username"));
-                                            System.out.println("E-mail: " + rs.getString("email"));
-                                            System.out.println("Phone number: " + rs.getString("telephone"));
-                                            System.out.println("Birth date: " + rs.getString("dateOfBirth"));
-                                            System.out.println("Permission ID: " + rs.getInt("user_type_id"));
-                                        }
-                                        else {
-                                            System.out.println("User with the ID " + idSearch + " was not found.");
-                                        }
-                                    }
-                                }
+                                DAO.readUserById();
                                 break;
 
                             default:
@@ -156,12 +134,8 @@ public class Main {
                 }
             }
 
-
-
-
-
-        }  catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Error retrieving user: " + e.getMessage());
         }
     }
 }

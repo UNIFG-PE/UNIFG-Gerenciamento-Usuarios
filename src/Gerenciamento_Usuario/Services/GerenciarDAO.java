@@ -94,6 +94,36 @@ public class GerenciarDAO {
     }
 
 
+    public void readUserById() {
+        System.out.print("Insert User ID: ");
+        int idSearch = scanner.nextInt();
+        scanner.nextLine();  // Consumir quebra de linha
+
+        String selectByID = "SELECT u.*, ut.type_name FROM users u JOIN user_type ut ON u.user_type_id = ut.id WHERE u.id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(selectByID)) {
+            stmt.setInt(1, idSearch);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("Found User: ");
+                    System.out.println("--------------------------");
+                    System.out.println("ID: " + rs.getInt("id"));
+                    System.out.println("Name: " + rs.getString("username"));
+                    System.out.println("E-mail: " + rs.getString("email"));
+                    System.out.println("Phone number: " + rs.getString("telephone"));
+                    System.out.println("Address: " + rs.getString("address"));
+                    System.out.println("Birth date: " + rs.getDate("dateOfBirth"));
+                    System.out.println("User Type: " + rs.getString("type_name"));
+                    System.out.println("--------------------------");
+                } else {
+                    System.out.println("User with the ID " + idSearch + " was not found.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving user: " + e.getMessage());
+        }
+    }
+
 
     public void deleteUser() {
         boolean check = false;
@@ -156,8 +186,8 @@ public class GerenciarDAO {
             System.out.println(rowsDeleted + " users have been deleted.");
         } catch (SQLException e) {
             System.out.println("Error during deletion: " + e.getMessage());
-        }
-    }
+   }
+}
 
 
 }
